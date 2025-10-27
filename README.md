@@ -1,5 +1,5 @@
-![NPM Version](https://img.shields.io/npm/v/%40bytelab.studio%2Ficonify-cli)
-![NPM Version](https://img.shields.io/npm/l/%40bytelab.studio%2Ficonify-cli)
+![NPM Version](https://img.shields.io/npm/v/iconify-cli)
+![NPM Version](https://img.shields.io/npm/l/iconify-cli)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/bytelab-studio/iconify-cli/cd.yml?label=CD)
 
 # Iconify CLI
