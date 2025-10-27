@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm ci
 
 # Copy all source files
-COPY ./docs ./docs
+COPY . .
 
 # Build the VitePress docs (from /docs)
 RUN npm run docs:build
