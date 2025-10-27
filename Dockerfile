@@ -9,6 +9,8 @@ RUN npm ci
 # Copy all source files
 COPY . .
 
+RUN npm build:templates
+
 # Build the VitePress docs (from /docs)
 RUN npm run docs:build
 
