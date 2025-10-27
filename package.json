@@ -1,0 +1,57 @@
+{
+    "name": "iconify-cli",
+    "version": "1.0.0",
+    "description": "A CLI for downloading Iconify icons in various formats",
+    "keywords": [
+        "iconify",
+        "iconify-cli",
+        "icon-downloader",
+        "icon-cli",
+        "icons",
+        "svg-icons",
+        "cli-tool",
+        "command-line",
+        "developer-tools"
+    ],
+    "license": "MIT",
+    "author": "Christoph Koschel",
+    "bugs": "https://github.com/bytelab-studio/iconify-cli/issues",
+    "homepage": "https://iconify-cli.bytelab.studio",
+    "repository": "https://github.com/bytelab-studio/iconify-cli",
+    "main": "dist/lib.js",
+    "types": "dist/lib.d.ts",
+    "type": "module",
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE"
+    ],
+    "scripts": {
+        "build:templates": "node packer.cjs ./src/lib/templates",
+        "build": "npm run build:templates && tsdown --entry.lib src/lib/index.ts --entry.bin src/bin/index.ts --format esm --dts --sourcemap",
+        "build:prod": "npm run build:templates && tsdown --entry.lib src/lib/index.ts --entry.bin src/bin/index.ts --format esm --dts --minify",
+        "docs:api": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-plugin-mdn-links --plugin typedoc-plugin-inline-sources --plugin typedoc-vitepress-theme --readme none --out ./docs/api ./src/lib/index.ts",
+        "docs:dev": "vitepress dev docs",
+        "docs:build": "npm run docs:api && vitepress build docs",
+        "docs:preview": "vitepress preview docs"
+    },
+    "bin": {
+        "iconify": "dist/bin.js"
+    },
+    "devDependencies": {
+        "@catppuccin/vitepress": "^0.1.2",
+        "@iconify/types": "^2.0.0",
+        "@types/node": "^24.9.1",
+        "tsdown": "^0.15.9",
+        "typedoc": "^0.28.14",
+        "typedoc-plugin-inline-sources": "^1.3.0",
+        "typedoc-plugin-markdown": "^4.9.0",
+        "typedoc-plugin-mdn-links": "^5.0.10",
+        "typedoc-vitepress-theme": "^1.1.2",
+        "typescript": "^5.9.3",
+        "vitepress": "^2.0.0-alpha.12"
+    },
+    "dependencies": {
+        "@koschel-christoph/node.options": "^1.1.0"
+    }
+}
