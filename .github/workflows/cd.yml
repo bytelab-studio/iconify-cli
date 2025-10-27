@@ -1,0 +1,72 @@
+name: CD - Publish & Release
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: npm ci
+      - name: Build library
+        run: npm run build:prod
+
+      - name: Get merged branch
+        id: merged
+        run: |
+          # Get the last commit merged into master
+          MERGED_BRANCH=$(git log -1 --pretty=%B | grep -oE '(release|hotfix)/[0-9]+\.[0-9]+\.[0-9]+')
+          if [ -z "$MERGED_BRANCH" ]; then
+            echo "No release or hotfix branch merged. Exiting."
+            echo "version=" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          echo "Merged branch: $MERGED_BRANCH"
+          VERSION="${MERGED_BRANCH#*/}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Update package.json version
+        if: steps.merged.outputs.version != ''
+        run: |
+          npm version ${{ steps.merged.outputs.version }} --no-git-tag-version --allow-same-version
+
+      - name: Commit and push version bump
+        if: steps.merged.outputs.version != ''
+        run: |
+          VERSION=${{ steps.merged.outputs.version }}
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "chore(release): v${VERSION}" || echo "No changes to commit"
+          git tag "v${VERSION}"
+          git push origin HEAD --tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to npm
+        if: steps.merged.outputs.version != ''
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
+      - name: Create GitHub Release
+        if: steps.merged.outputs.version != ''
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.merged.outputs.version }}
+          name: Release v${{ steps.merged.outputs.version }}
+          generate_release_notes: true

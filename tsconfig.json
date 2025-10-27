@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "target": "ES2024",
+        "module": "CommonJS",
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "strict": true,
+        "paths": {
+            "@lib": ["./src/lib/index.ts"],
+            "@lib/*": ["./src/lib/*"],
+            "@bin/*": ["./src/bin/*"]
+        }
+    },
+    "exclude": [
+        "dist"
+    ]
+}
