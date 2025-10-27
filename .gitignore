@@ -6,3 +6,4 @@ src/lib/templates
 docs/.vitepress/dist
 docs/.vitepress/cache
 docs/api
+*.tgz

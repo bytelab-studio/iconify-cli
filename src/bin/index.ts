@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import {OptionSet, SubCommandSet} from "@koschel-christoph/node.options";
 
 import sets from "@bin/sets";
