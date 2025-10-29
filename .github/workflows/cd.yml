@@ -140,4 +140,4 @@ jobs:
           tag_name: v${{ needs.release_npm.outputs.version }}
           name: Release v${{ needs.release_npm.outputs.version }}
           generate_release_notes: true
-          files: artifacts/**/*
+          files: ./artifacts/*
