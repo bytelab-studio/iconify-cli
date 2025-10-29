@@ -37,7 +37,7 @@ function getTemplatePrefix(key: keyof typeof templates): string {
 }
 
 function format(base: string, args: Record<string, string>): string {
-    return base.replace(/\{(\S+)}/g, (raw: string, index: any) => {
+    return base.replace(/\{([^\s}]+)}/g, (raw: string, index: any) => {
         const value: string | undefined = args[index];
 
         return typeof value == "undefined"
