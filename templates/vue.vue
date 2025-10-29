@@ -1,6 +1,6 @@
 <!--
-{0}
+{license}
 -->
 <template>
-    {1}
+    {svg}
 </template>
