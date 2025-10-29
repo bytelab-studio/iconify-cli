@@ -20,7 +20,7 @@ export {default as configTemplate} from "@lib/templates/config";
  * @property svg    - A raw svg file template
  * @property vue    - A Vue.js template
  * @property jsx    - A JSX template
- * @property vue    - A TSX template
+ * @property tsx    - A TSX template
  */
 export const templates = {
     raw: _raw,

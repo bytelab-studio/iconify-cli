@@ -2,7 +2,7 @@
 {license}
  */
 
-export function {collection}_{icon}() {
+export default function {collection}_{icon}() {
     return (
         {svg}
     );
