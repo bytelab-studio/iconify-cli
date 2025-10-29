@@ -6,6 +6,7 @@ import _raw from "@lib/templates/raw";
 import _rawTs from "@lib/templates/raw-ts";
 import _svg from "@lib/templates/svg";
 import _vue from "@lib/templates/vue";
+import _php from "@lib/templates/php";
 import packageJSON from "../../package.json";
 
 export {default as configTemplate} from "@lib/templates/config";
@@ -16,19 +17,22 @@ export {default as configTemplate} from "@lib/templates/config";
  * @property raw    - A raw ESM JavaScript template
  * @property raw-ts - A raw ESM TypeScript template
  * @property svg    - A raw svg file template
- * @property vue - A Vue.js template
+ * @property vue    - A Vue.js template
+ * @property php    - A PHP v8 template
  */
 export const templates = {
     raw: _raw,
     "raw-ts": _rawTs,
     svg: _svg,
-    vue: _vue
+    vue: _vue,
+    php: _php
 }
 
 function getTemplatePrefix(key: keyof typeof templates): string {
     switch (key) {
         case "raw":
         case "raw-ts":
+        case "php":
             return " * ";
         case "svg":
         case "vue":
@@ -111,5 +115,7 @@ export function getTemplateFileExtension(templateName: keyof typeof templates): 
             return ".svg";
         case "vue":
             return ".vue";
+        case "php":
+            return ".php";
     }
 }
