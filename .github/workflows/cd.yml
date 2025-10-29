@@ -5,11 +5,13 @@ on:
       - master
 
 jobs:
-  release:
+  release_npm:
     runs-on: ubuntu-latest
     permissions:
       contents: write
       packages: write
+    outputs:
+      version: ${{ steps.merged.outputs.version }}
 
     steps:
       - uses: actions/checkout@v4
@@ -19,11 +21,6 @@ jobs:
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org
-
-      - name: Install dependencies
-        run: npm ci
-      - name: Build library
-        run: npm run build:prod
 
       - name: Get merged branch
         id: merged
@@ -45,6 +42,14 @@ jobs:
         run: |
           npm version ${{ steps.merged.outputs.version }} --no-git-tag-version --allow-same-version
 
+      - name: Install dependencies
+        if: steps.merged.outputs.version != ''
+        run: npm ci
+
+      - name: Build library
+        if: steps.merged.outputs.version != ''
+        run: npm run build:prod
+
       - name: Commit and push version bump
         if: steps.merged.outputs.version != ''
         run: |
@@ -63,10 +68,76 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
-      - name: Create GitHub Release
+      - name: Upload dist artifact
         if: steps.merged.outputs.version != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-dist
+          path: dist/**/*
+
+  build_executables:
+    if: needs.release_npm.outputs.version != ''
+    needs: release_npm
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [linux-x64, linux-arm64, windows-x64, darwin-x64, darwin-arm64, linux-x64-musl, linux-arm64-musl]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-dist
+          path: dist
+
+      - name: Build executable
+        id: build
+        run: |
+          PLATFORM=$(echo "${{ matrix.target }}" | cut -d "-" -f 1)
+          mkdir -p ${{ matrix.target }}
+          bun build dist/bin.js --compile --target=bun-${{ matrix.target }} --outfile ${{ matrix.target }}/iconify
+          if [[ $PLATFORM == "windows" ]]
+          then
+            zip -r iconify-${{ matrix.target }}.zip ${{ matrix.target }}
+            echo "file=iconify-${{ matrix.target }}.zip" >> $GITHUB_OUTPUT
+          else
+            tar -czf iconify-${{ matrix.target }}.tar.gz ${{ matrix.target }}
+            echo "file=iconify-${{ matrix.target }}.tar.gz" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iconify-${{ matrix.target }}
+          path: ${{ steps.build.outputs.file }}
+
+  release_gh:
+    if: needs.release_npm.outputs.version != ''
+    needs: [release_npm, build_executables]
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Download all built executables
+        uses: actions/download-artifact@v4
+        with:
+          pattern: iconify-*
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Generate checksums
+        run: |
+          cd artifacts
+          sha256sum * > checksums.txt
+
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ steps.merged.outputs.version }}
-          name: Release v${{ steps.merged.outputs.version }}
+          tag_name: v${{ needs.release_npm.outputs.version }}
+          name: Release v${{ needs.release_npm.outputs.version }}
           generate_release_notes: true
+          files: ./artifacts/*
