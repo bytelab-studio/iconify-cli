@@ -46,6 +46,13 @@ function format(base: string, args: Record<string, string>): string {
     });
 }
 
+/**
+ * Decodes a base64-encoded template into its UTF-8 representation.
+ *
+ * @param template - The base64-encoded template to be decoded.
+ *
+ * @return The decoded UTF-8 template.
+ */
 export function decodeTemplate(template: string): string {
     return Buffer.from(template, "base64").toString("utf-8");
 }
@@ -67,17 +74,16 @@ function buildCommentString(prefix: string, icon: string, collection: IconifyInf
  * Applies a specified template to the given SVG string with additional metadata.
  *
  * @param templateName - The name identifier of the template to apply.
- * @param template - The encoded template string to be processed and applied.
- * @param prefix - The collections prefix (mdi, material-icons)
- * @param icon   - The name of the icon
- * @param collection - Metadata object describing the collection properties.
- * @param svg - The SVG string to be processed using the template.
+ * @param prefix       - The collections prefix (mdi, material-icons)
+ * @param icon         - The name of the icon
+ * @param collection   - Metadata object describing the collection properties.
+ * @param svg          - The SVG string to be processed using the template.
  *
  * @return The resulting string after the template has been applied and processed with the SVG and metadata.
  */
-export function applyTemplate(templateName: keyof typeof templates, template: string, prefix: string, icon: string, collection: IconifyInfo, svg: string): string {
+export function applyTemplate(templateName: keyof typeof templates, prefix: string, icon: string, collection: IconifyInfo, svg: string): string {
     const comment: string = buildCommentString(prefix, icon, collection, getTemplatePrefix(templateName));
-    template = decodeTemplate(template);
+    const template: string = decodeTemplate(templates[templateName]);
 
     return format(template, {
         "license": comment,
