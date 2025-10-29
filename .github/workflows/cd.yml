@@ -7,9 +7,6 @@ on:
 jobs:
   release_npm:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
     outputs:
       version: ${{ steps.merged.outputs.version }}
 
@@ -120,6 +117,9 @@ jobs:
     if: needs.release_npm.outputs.version != ''
     needs: [release_npm, build_executables]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
     steps:
 
       - name: Download all built executables
