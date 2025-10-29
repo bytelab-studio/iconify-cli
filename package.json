@@ -1,6 +1,6 @@
 {
     "name": "iconify-cli",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "A CLI for downloading Iconify icons in various formats",
     "keywords": [
         "iconify",
