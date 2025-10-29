@@ -10,6 +10,8 @@ jobs:
     permissions:
       contents: write
       packages: write
+    outputs:
+      version: ${{ steps.merged.outputs.version }}
 
     steps:
       - uses: actions/checkout@v4
@@ -122,16 +124,17 @@ jobs:
         with:
           pattern: iconify-*
           path: ./artifacts
+          merge-multiple: true
 
       - name: Generate checksums
         run: |
           cd artifacts
-          find . -type f -name '*.zip' -o -name '*.tar.gz' | xargs sha256sum > checksums.txt
+          sha256sum > checksums.txt
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ steps.merged.outputs.version }}
-          name: Release v${{ steps.merged.outputs.version }}
+          tag_name: v${{ steps.release_npm.outputs.version }}
+          name: Release v${{ steps.release_npm.outputs.version }}
           generate_release_notes: true
           files: artifacts/**/*
