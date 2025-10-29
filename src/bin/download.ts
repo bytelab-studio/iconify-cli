@@ -103,7 +103,6 @@ function* download() {
     })();
 
     const templateName: keyof typeof templates = templateOption as keyof typeof templates;
-    const template: string = templates[templateName];
 
     (async () => {
         let successfullyDownloaded: number = 0;
@@ -141,7 +140,7 @@ function* download() {
             Console.writeFetch(`Fetch /${prefix}/${name}.svg`);
             try {
                 const svg: string = await api.downloadIcon(config, prefix, name);
-                const content: string = applyTemplate(templateName, template, prefix, name, information, svg);
+                const content: string = applyTemplate(templateName, prefix, name, information, svg);
                 const savingInformation: IconPathInfo = generateIconPath(output, templateName, prefix, name, naming, placement);
 
                 if (!fs.existsSync(savingInformation.folder) || !fs.statSync(savingInformation.folder).isDirectory()) {

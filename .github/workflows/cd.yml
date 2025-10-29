@@ -22,11 +22,6 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
 
-      - name: Install dependencies
-        run: npm ci
-      - name: Build library
-        run: npm run build:prod
-
       - name: Get merged branch
         id: merged
         run: |
@@ -46,6 +41,14 @@ jobs:
         if: steps.merged.outputs.version != ''
         run: |
           npm version ${{ steps.merged.outputs.version }} --no-git-tag-version --allow-same-version
+
+      - name: Install dependencies
+        if: steps.merged.outputs.version != ''
+        run: npm ci
+
+      - name: Build library
+        if: steps.merged.outputs.version != ''
+        run: npm run build:prod
 
       - name: Commit and push version bump
         if: steps.merged.outputs.version != ''
