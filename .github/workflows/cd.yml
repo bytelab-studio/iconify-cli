@@ -71,7 +71,7 @@ jobs:
           path: dist/**/*
 
   build_executables:
-    if: needs.release.outputs.version != ''
+    if: needs.release_npm.outputs.version != ''
     needs: release_npm
     runs-on: ubuntu-latest
     strategy:
@@ -112,7 +112,7 @@ jobs:
           path: ${{ steps.build.outputs.file }}
 
   release_gh:
-    if: needs.release.outputs.version != ''
+    if: needs.release_npm.outputs.version != ''
     needs: [release_npm, build_executables]
     runs-on: ubuntu-latest
     steps:
@@ -126,11 +126,9 @@ jobs:
       - name: Generate checksums
         run: |
           cd artifacts
-          ls -lsh
-          sha256sum * > checksums.txt
+          find . -type f -name '*.zip' -o -name '*.tar.gz' | xargs sha256sum > checksums.txt
 
       - name: Create GitHub Release
-        if: steps.merged.outputs.version != ''
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.merged.outputs.version }}
