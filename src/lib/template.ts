@@ -7,6 +7,9 @@ import _rawTs from "@lib/templates/raw-ts";
 import _svg from "@lib/templates/svg";
 import _vue from "@lib/templates/vue";
 import _php from "@lib/templates/php";
+import _jsx from "@lib/templates/jsx";
+import _tsx from "@lib/templates/tsx";
+
 import packageJSON from "../../package.json";
 
 export {default as configTemplate} from "@lib/templates/config";
@@ -19,13 +22,17 @@ export {default as configTemplate} from "@lib/templates/config";
  * @property svg    - A raw svg file template
  * @property vue    - A Vue.js template
  * @property php    - A PHP v8 template
+ * @property jsx    - A JSX template
+ * @property tsx    - A TSX template
  */
 export const templates = {
     raw: _raw,
     "raw-ts": _rawTs,
     svg: _svg,
     vue: _vue,
-    php: _php
+    php: _php,
+    jsx: _jsx,
+    tsx: _tsx
 }
 
 function getTemplatePrefix(key: keyof typeof templates): string {
@@ -33,6 +40,8 @@ function getTemplatePrefix(key: keyof typeof templates): string {
         case "raw":
         case "raw-ts":
         case "php":
+        case "jsx":
+        case "tsx":
             return " * ";
         case "svg":
         case "vue":
@@ -117,5 +126,9 @@ export function getTemplateFileExtension(templateName: keyof typeof templates): 
             return ".vue";
         case "php":
             return ".php";
+        case "jsx":
+            return ".jsx";
+        case "tsx":
+            return ".tsx";
     }
 }
