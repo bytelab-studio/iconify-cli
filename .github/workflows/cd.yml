@@ -129,12 +129,12 @@ jobs:
       - name: Generate checksums
         run: |
           cd artifacts
-          sha256sum > checksums.txt
+          sha256sum * > checksums.txt
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ steps.release_npm.outputs.version }}
-          name: Release v${{ steps.release_npm.outputs.version }}
+          tag_name: v${{ needs.release_npm.outputs.version }}
+          name: Release v${{ needs.release_npm.outputs.version }}
           generate_release_notes: true
           files: artifacts/**/*
