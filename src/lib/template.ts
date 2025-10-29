@@ -6,10 +6,9 @@ import _raw from "@lib/templates/raw";
 import _rawTs from "@lib/templates/raw-ts";
 import _svg from "@lib/templates/svg";
 import _vue from "@lib/templates/vue";
+import packageJSON from "../../package.json";
 
 export {default as configTemplate} from "@lib/templates/config";
-
-import packageJSON from "../../package.json";
 
 /**
  * An object containing templates mapped to their respective keys.
@@ -37,8 +36,8 @@ function getTemplatePrefix(key: keyof typeof templates): string {
     }
 }
 
-function format(base: string, ...args: string[]): string {
-    return base.replace(/\{(\d+)}/g, (raw: string, index: any) => {
+function format(base: string, args: Record<string, string>): string {
+    return base.replace(/\{(\S+)}/g, (raw: string, index: any) => {
         const value: string | undefined = args[index];
 
         return typeof value == "undefined"
@@ -80,7 +79,13 @@ export function applyTemplate(templateName: keyof typeof templates, template: st
     const comment: string = buildCommentString(prefix, icon, collection, getTemplatePrefix(templateName));
     template = decodeTemplate(template);
 
-    return format(template, comment, svg);
+    return format(template, {
+        "license": comment,
+        "svg": svg,
+        "svg:base64": Buffer.from(svg, "utf-8").toString("base64"),
+        "icon": icon,
+        "collection": prefix
+    });
 }
 
 /**

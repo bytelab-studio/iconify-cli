@@ -1,6 +1,6 @@
 /*
-{0}
+{license}
  */
 
-const icon = `{1}`;
+const icon = `{svg}`;
 export default icon;
