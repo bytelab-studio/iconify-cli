@@ -43,6 +43,22 @@ export default defineConfig({
                 ]
             },
             {
+                text: "Commands",
+                link: "/commands/",
+                items: [
+                    {text: "sets", link: "/commands/sets"},
+                    {text: "search", link: "/commands/search"},
+                    {text: "download", link: "/commands/download"},
+                    {
+                        text: "config", 
+                        link: "/commands/config/",
+                        items: [
+                            {text: "init", link: "/commands/config/init"},
+                        ]
+                    }
+                ]
+            },
+            {
                 text: "API",
                 link: "/api/",
                 items: apiSideBar
