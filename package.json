@@ -21,14 +21,19 @@
     "main": "dist/lib.js",
     "types": "dist/lib.d.ts",
     "exports": {
-        "import": "./dist/lib.js",
-        "require": "./dist/lib.cjs"
+        "import": {
+            "default": "./dist/lib.js",
+            "types": "./dist/lib.d.ts"
+        },
+        "require": {
+            "default": "./dist/lib.cjs",
+            "types": "./dist/lib.d.cts"
+        }
     },
     "type": "module",
     "files": [
         "dist",
         "!dist/bin.d.*",
-        "!dist/lib.d.cts",
         "!dist/bin.cjs",
         "README.md",
         "LICENSE"
