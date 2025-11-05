@@ -1,19 +1,19 @@
 # `iconify search <pattern>`
 
-Search for a icons based on the given pattern
+Search for an icon based on the given pattern
 
 ## 🔧 Options
 
-Flag                 | Description
----------------------|----------------------------------------------------------------
-`-l=` \| `--limit=`  | Sets the result limit, can be any integer between `1` and `999`
-`-o=` \| `--offset=` | Starts the result from the defined offset
-`-p=` \| `--prefix=` | Search in the give icon set
-`--config-host=`     | Overrides the target api hostname
-`--config-port=`     | Overrides the target api port
-`-h` \| `--help`     | Prints a help text
+| Flag                 | Description                                                     |
+|----------------------|-----------------------------------------------------------------|
+| `-l=` \| `--limit=`  | Sets the result limit, can be any integer between `1` and `999` |
+| `-o=` \| `--offset=` | Starts the result from the defined offset                       |
+| `-p=` \| `--prefix=` | Search in the give icon set                                     |
+| `--config-host=`     | Overrides the target api hostname                               |
+| `--config-port=`     | Overrides the target api port                                   |
+| `-h` \| `--help`     | Prints a help text                                              |
 
-## ⚙️ Programatic example
+## ⚙️ Programmatic example
 
 ### Minimal example
 

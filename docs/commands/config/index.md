@@ -4,9 +4,9 @@ A command group for configuration commands
 
 ## 🔧 Options
 
-Flag                | Description
---------------------|-------------------
-`-h` \| `--help`    | Prints a help text
+| Flag             | Description        |
+|------------------|--------------------|
+| `-h` \| `--help` | Prints a help text |
 
 ## 🧩 Subcommands
 

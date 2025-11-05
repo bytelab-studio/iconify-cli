@@ -4,16 +4,16 @@ Download one or more icons
 
 ## 🔧 Options
 
-Flag              | Description
-------------------------|----------------------------------------------------------------
-`-t=` \| `--template=`  | Downloads the icon in a specific template
-`-p=` \| `--placement=` | Saves the downloaded icons with the defined strategy
-`-n=` \| `--naming=`    | Generates the filname based on the defined strategy
-`--config-host=`        | Overrides the target api hostname
-`--config-port=`        | Overrides the target api port
-`-h` \| `--help`        | Prints a help text
+| Flag                    | Description                                          |
+|-------------------------|------------------------------------------------------|
+| `-t=` \| `--template=`  | Downloads the icon in a specific template            |
+| `-p=` \| `--placement=` | Saves the downloaded icons with the defined strategy |
+| `-n=` \| `--naming=`    | Generates the filname based on the defined strategy  |
+| `--config-host=`        | Overrides the target api hostname                    |
+| `--config-port=`        | Overrides the target api port                        |
+| `-h` \| `--help`        | Prints a help text                                   |
 
-## ⚙️ Programatic example
+## ⚙️ Programmatic example
 
 ### Minimal example
 

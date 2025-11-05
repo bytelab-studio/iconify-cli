@@ -1,14 +1,14 @@
 # `iconify config init`
 
-Initalized an empty configuration file in the current working directory
+Initialized an empty configuration file in the current working directory
 
 ## 🔧 Options
 
-Flag             | Description
------------------|-------------------
-`-h` \| `--help` | Prints a help text
+| Flag             | Description        |
+|------------------|--------------------|
+| `-h` \| `--help` | Prints a help text |
 
-## ⚙️ Programatic example
+## ⚙️ Programmatic example
 
 ```typescript
 import {decodeTemplate, configTemplate} from "iconify-cli";

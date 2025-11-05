@@ -4,10 +4,10 @@ The top level command of the CLI tool. Use feature by passing a sub-command
 
 ## 🔧 Options
 
-Flag                | Description
---------------------|-------------------
-`-v` \| `--version` | Prints the CLI version
-`-h` \| `--help`    | Prints a help text
+| Flag                | Description            |
+|---------------------|------------------------|
+| `-v` \| `--version` | Prints the CLI version |
+| `-h` \| `--help`    | Prints a help text     |
 
 ## 🧩 Subcommands
 
