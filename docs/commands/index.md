@@ -1,6 +1,6 @@
-# `iconfiy`
+# `iconify`
 
-The top level command of the CLI tool. Use feature by passing a sub-command
+The top-level command of the CLI tool. Use the feature by passing a sub-command
 
 ## 🔧 Options
 

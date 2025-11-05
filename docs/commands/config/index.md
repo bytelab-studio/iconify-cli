@@ -1,4 +1,4 @@
-# `iconfiy config`
+# `iconify config`
 
 A command group for configuration commands
 
