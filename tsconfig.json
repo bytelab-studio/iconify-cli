@@ -13,6 +13,7 @@
         }
     },
     "exclude": [
-        "dist"
+        "dist",
+        "templates"
     ]
 }

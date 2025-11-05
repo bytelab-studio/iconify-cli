@@ -36,10 +36,10 @@ const collection = collections.mdi;
 const svg: string = await api.downloadIcon(config, "mdi", "home");
 
 // Wraps the svg into a Vue.js template
-const template: string = applyTemplate("vue", templates["vue"], "mdi", "home", collection, svg);
+const template: string = applyTemplate("vue", "mdi", "home", collection, svg);
 
 // Do something with the template
-console.log(template)
+console.log(template);
 ```
 
 ## 🧠 TypeDoc Reference
