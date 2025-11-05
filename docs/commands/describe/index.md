@@ -11,3 +11,4 @@ A command group for detailed information
 ## 🧩 Subcommands
 
 - [icon](/commands/describe/icon)
+- [collection](/commands/describe/collection)
