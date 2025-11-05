@@ -20,6 +20,10 @@ npx iconify-cli@latest <command>
 npm install -g iconify-cli
 ```
 
+::: info
+Since v1.1.2 it is also possible to download a standalone executable from the GitHub [release page](https://github.com/bytelab-studio/iconify-cli/releases/latest)
+:::
+
 ## ⚙️ Configuration
 
 Before downloading icons, initialize a configuration file.
@@ -242,6 +246,24 @@ Downloads the icon as a raw ESM TypeScript module
 Downloads the icon as a Vue.js component
 
 <<< @/../templates/vue.vue
+
+### `php`
+
+Downloads the icon as a PHP component
+
+<<< @/../templates/php.php
+
+### `jsx`
+
+Downloads the icon as a JSX component
+
+<<< @/../templates/jsx.jsx
+
+### `tsx`
+
+Downloads the icon as a TSX component
+
+<<< @/../templates/tsx.tsx
 
 ### Missing a template?
 
