@@ -20,16 +20,28 @@
     "repository": "https://github.com/bytelab-studio/iconify-cli",
     "main": "dist/lib.js",
     "types": "dist/lib.d.ts",
+    "exports": {
+        "import": {
+            "default": "./dist/lib.js",
+            "types": "./dist/lib.d.ts"
+        },
+        "require": {
+            "default": "./dist/lib.cjs",
+            "types": "./dist/lib.d.cts"
+        }
+    },
     "type": "module",
     "files": [
         "dist",
+        "!dist/bin.d.*",
+        "!dist/bin.cjs",
         "README.md",
         "LICENSE"
     ],
     "scripts": {
         "build:templates": "node packer.cjs ./src/lib/templates",
-        "build": "npm run build:templates && tsdown --entry.lib src/lib/index.ts --entry.bin src/bin/index.ts --format esm --dts --sourcemap",
-        "build:prod": "npm run build:templates && tsdown --entry.lib src/lib/index.ts --entry.bin src/bin/index.ts --format esm --dts --minify",
+        "build": "npm run build:templates && tsdown --entry.lib src/lib/index.ts --entry.bin src/bin/index.ts --format esm,cjs --dts --sourcemap",
+        "build:prod": "npm run build:templates && tsdown --entry.lib src/lib/index.ts --entry.bin src/bin/index.ts --format esm,cjs --dts --minify",
         "docs:api": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-plugin-mdn-links --plugin typedoc-plugin-inline-sources --plugin typedoc-vitepress-theme --readme none --out ./docs/api ./src/lib/index.ts",
         "docs:dev": "vitepress dev docs",
         "docs:build": "npm run docs:api && vitepress build docs",
