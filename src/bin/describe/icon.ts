@@ -37,7 +37,7 @@ function* icon() {
         process.exit(1);
     }
 
-    const [prefix, name] = icon.split(":", 2);
+    const [prefix, name] = (icon as string).split(":", 2);
 
     Console.writeFetch(`Fetch /${prefix}.json?icons=${name}`);
     api.getIconsInformation(config, prefix, [name]).then((information: IconifyJSONIconsData) => {
