@@ -15,3 +15,4 @@ Flag                | Description
 - [search](/commands/search)
 - [download](/commands/download)
 - [config](/commands/config/)
+- [describe](/commands/describe/)
