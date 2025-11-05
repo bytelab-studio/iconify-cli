@@ -1,4 +1,4 @@
-# `iconfiy describe`
+# `iconify describe`
 
 A command group for detailed information
 
