@@ -15,3 +15,4 @@ The top-level command of the CLI tool. Use the feature by passing a sub-command
 - [search](/commands/search)
 - [download](/commands/download)
 - [config](/commands/config/)
+- [describe](/commands/describe/)
