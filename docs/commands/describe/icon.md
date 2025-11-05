@@ -10,7 +10,7 @@ Prints information about a specific icon
 | `--config-port=` | Overrides the target api port     |
 | `-h` \| `--help` | Prints a help text                |
 
-## ⚙️ Programatic example
+## ⚙️ Programmatic example
 
 ```typescript
 import {Config, api} from "iconify-cli";
