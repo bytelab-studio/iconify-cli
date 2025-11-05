@@ -1,10 +1,10 @@
+import * as path from "path";
 import * as fs from "fs";
 
 import {OptionSet} from "@koschel-christoph/node.options";
 
 import {configTemplate, decodeTemplate} from "@lib";
 import {CONFIG_FILE_NAME} from "@bin/config-helper";
-import path from "path";
 import Console from "@bin/console";
 
 function* init() {

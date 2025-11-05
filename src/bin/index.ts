@@ -5,6 +5,7 @@ import sets from "@bin/sets";
 import search from "@bin/search";
 import download from "@bin/download";
 import config from "@bin/config";
+import describe from "@bin/describe";
 
 import packageJSON from "../../package.json";
 
@@ -35,7 +36,8 @@ const cli: SubCommandSet = new SubCommandSet(
     sets,
     search,
     download,
-    config
+    config,
+    describe
 );
 
 cli.parse(process.argv);
