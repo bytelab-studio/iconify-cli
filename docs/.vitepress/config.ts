@@ -55,6 +55,13 @@ export default defineConfig({
                         items: [
                             {text: "init", link: "/commands/config/init"},
                         ]
+                    },
+                    {
+                        text: "describe",
+                        link: "/commands/describe/",
+                        items: [
+                            {text: "icon", link: "/commands/describe/icon"},
+                        ]
                     }
                 ]
             },
