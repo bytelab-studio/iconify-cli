@@ -1,6 +1,6 @@
 # `iconify describe collection <collection>`
 
-Prints information about a collection icon
+Prints information about a collection
 
 ## 🔧 Options
 
