@@ -15,6 +15,7 @@ import {Config} from "@lib/config";
  * @param path    - The path of the requesting url
  * @param data    - The requests payload
  * @param headers - A header map for modified request headers
+ * @param agent   - A HTTP Agent that should be used for the request
  *
  * @returns Always the response data as Buffer
  */
@@ -25,6 +26,7 @@ function sendHttpRequest(
     path: string,
     data?: Buffer | string,
     headers: Record<string, string> = {},
+    agent: http.Agent | null = null,
 ): Promise<Buffer> {
     return new Promise((resolve: (v: Buffer) => void, reject: (reason: any) => void): void => {
         const req: http.ClientRequest = https.request({
@@ -32,7 +34,8 @@ function sendHttpRequest(
             port,
             path,
             method,
-            headers
+            headers,
+            agent: agent ?? undefined
         }, (res: http.IncomingMessage) => {
             if (!res.statusCode || res.statusCode < 200 || res.statusCode > 299) {
                 reject(new APIException(`Request returned '${res.statusCode}' status code`, host, path));
@@ -58,9 +61,10 @@ function sendHttpRequest(
  * Helper function to make an HTTP GET requests
  *
  * @param host    - The host of the requesting url
- * @param host    - The port of the requesting url
+ * @param port    - The port of the requesting url
  * @param path    - The path of the requesting url
  * @param headers - A header map for modified request headers
+ * @param agent   - A HTTP Agent that should be used for the request
  *
  * @returns Always the response data as Buffer
  */
@@ -68,9 +72,10 @@ function sendHttpGetRequest(
     host: string,
     port: number,
     path: string,
-    headers?: Record<string, string>
+    headers?: Record<string, string>,
+    agent?: http.Agent | null
 ): Promise<Buffer> {
-    return sendHttpRequest("GET", host, port, path, undefined, headers);
+    return sendHttpRequest("GET", host, port, path, undefined, headers, agent);
 }
 
 /**
@@ -81,6 +86,7 @@ function sendHttpGetRequest(
  * @param port    - The port of the requesting url
  * @param data    - The payload of the request
  * @param headers - A header map for modified request headers
+ * @param agent   - A HTTP Agent that should be used for the request
  *
  * @returns Always the response data as Buffer
  */
@@ -89,9 +95,10 @@ function sendHttpPostRequest(
     port: number,
     path: string,
     data?: Buffer | string,
-    headers?: Record<string, string>
+    headers?: Record<string, string>,
+    agent?: http.Agent | null
 ): Promise<Buffer> {
-    return sendHttpRequest("POST", host, port, path, data, headers);
+    return sendHttpRequest("POST", host, port, path, data, headers, agent);
 }
 
 /**
@@ -102,6 +109,7 @@ function sendHttpPostRequest(
  * @param path    - The path of the requesting url
  * @param data    - The payload of the request
  * @param headers - A header map for modified request headers
+ * @param agent   - A HTTP Agent that should be used for the request
  *
  * @returns Always the response data as Buffer
  */
@@ -110,9 +118,10 @@ function sendHttpPutRequest(
     port: number,
     path: string,
     data?: Buffer | string,
-    headers?: Record<string, string>
+    headers?: Record<string, string>,
+    agent?: http.Agent | null
 ): Promise<Buffer> {
-    return sendHttpRequest("PUT", host, port, path, data, headers);
+    return sendHttpRequest("PUT", host, port, path, data, headers, agent);
 }
 
 /**
@@ -123,6 +132,7 @@ function sendHttpPutRequest(
  * @param path    - The path of the requesting url
  * @param data    - The payload of the request
  * @param headers - A header map for modified request headers
+ * @param agent   - A HTTP Agent that should be used for the request
  *
  * @returns Always the response data as Buffer
  */
@@ -131,9 +141,10 @@ function sendHttpPatchRequest(
     port: number,
     path: string,
     data?: Buffer | string,
-    headers?: Record<string, string>
+    headers?: Record<string, string>,
+    agent?: http.Agent | null
 ): Promise<Buffer> {
-    return sendHttpRequest("PATCH", host, port, path, data, headers);
+    return sendHttpRequest("PATCH", host, port, path, data, headers, agent);
 }
 
 /**
@@ -143,6 +154,7 @@ function sendHttpPatchRequest(
  * @param port    - The port of the requesting url
  * @param path    - The path of the requesting url
  * @param headers - A header map for modified request headers
+ * @param agent   - A HTTP Agent that should be used for the request
  *
  * @returns Always the response data as Buffer
  */
@@ -150,9 +162,10 @@ function sendHttpDeleteRequest(
     host: string,
     port: number,
     path: string,
-    headers?: Record<string, string>
+    headers?: Record<string, string>,
+    agent?: http.Agent
 ): Promise<Buffer> {
-    return sendHttpRequest("DELETE", host, port, path, undefined, headers);
+    return sendHttpRequest("DELETE", host, port, path, undefined, headers, agent);
 }
 
 /**
@@ -216,7 +229,7 @@ export async function searchIcon(config: Config, search: string, prefixes: strin
         query += `&start=${offset}`;
     }
 
-    const buffer: Buffer = await sendHttpGetRequest(config.apiHost, config.apiPort, `/search?${query}`);
+    const buffer: Buffer = await sendHttpGetRequest(config.apiHost, config.apiPort, `/search?${query}`, {}, config.agent);
     try {
         const content: string = buffer.toString("utf-8");
         return JSON.parse(content);
@@ -240,7 +253,7 @@ export async function searchIcon(config: Config, search: string, prefixes: strin
 export async function getIconsInformation(config: Config, prefix: string, icons: string[]): Promise<IconifyJSONIconsData> {
     const query: string = "icons=" + icons.map(i => encodeURIComponent(i)).join(",");
 
-    const buffer: Buffer = await sendHttpGetRequest(config.apiHost, config.apiPort, `/${encodeURIComponent(prefix)}.json?${query}`);
+    const buffer: Buffer = await sendHttpGetRequest(config.apiHost, config.apiPort, `/${encodeURIComponent(prefix)}.json?${query}`, {}, config.agent);
     try {
         const content: string = buffer.toString("utf-8");
         return JSON.parse(content);

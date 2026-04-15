@@ -1,3 +1,5 @@
+import * as http from "node:http";
+
 /**
  * A configuration class for managing application behavior.
  */
@@ -13,6 +15,8 @@ export class Config {
     public naming: string | null = null;
 
     public template: string | null = null;
+
+    public agent: http.Agent | null = null;
 
     public constructor() {
     }
