@@ -1,7 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import {OptionFieldArgument} from "@koschel-christoph/node.options";
+import {ProxyAgent} from "proxy-agent";
+import {OptionFieldArgument, OptionFlagArgument} from "@koschel-christoph/node.options";
 
 import {Config} from "@lib";
 import {IniFile, IniFileSection} from "@bin/ini";
@@ -62,6 +63,10 @@ function applyAPIConfig(config: Config, section: IniFileSection | null): void {
 
     if (section.hasValue("port")) {
         config.apiPort = section.getInteger("port");
+    }
+
+    if (section.hasValue("enable_proxy") && section.getBoolean("enable_proxy")) {
+        config.agent = new ProxyAgent();
     }
 }
 
@@ -126,7 +131,7 @@ export function applyConfigFile(config: Config): void {
  *
  * @return An array of flag definitions
  */
-export function getConfigModificationFlags(config: Config): OptionFieldArgument[] {
+export function getConfigModificationFlags(config: Config): Array<OptionFieldArgument |  OptionFlagArgument> {
     return [
         ["config-host=", "Sets the API {host}", v => config.apiHost = v],
         ["config-port=", "Sets the API {port}", v => {
@@ -137,6 +142,7 @@ export function getConfigModificationFlags(config: Config): OptionFieldArgument[
             }
 
             config.apiPort = value;
-        }]
+        }],
+        ["no-proxy", "Ignores HTTP_PROXY, HTTPS_PROXY and NO_PROXY env variables", () => config.agent = null]
     ];
 }

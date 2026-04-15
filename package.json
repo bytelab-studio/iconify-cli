@@ -64,6 +64,7 @@
         "vitepress": "^2.0.0-alpha.12"
     },
     "dependencies": {
-        "@koschel-christoph/node.options": "^1.1.0"
+        "@koschel-christoph/node.options": "^1.1.0",
+        "proxy-agent": "^8.0.1"
     }
 }
